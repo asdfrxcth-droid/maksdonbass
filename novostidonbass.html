@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>СПАСИБО</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background-color: #000;
+    color: lime;
+    font-family: monospace;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .border {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 2px solid #fff;
+    animation: blink 1s infinite;
+    pointer-events: none;
+    box-sizing: border-box;
+  }
+
+  @keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+  }
+
+  .text {
+    z-index: 1;
+    font-size: 3em;
+    text-align: center;
+  }
+
+  .symbols {
+    position: absolute;
+    color: #fff;
+    font-size: 1em;
+    animation: flicker 2s infinite;
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+</style>
+</head>
+<body>
+<div class="border"></div>
+<div class="text" id="mainText">Зачекайте... йде прогрузка 1</div>
+
+<script>
+  const mainText = document.getElementById('mainText');
+  let count = 1;
+  const interval = setInterval(() => {
+    count++;
+    if (count <= 5) {
+      mainText.textContent = `Зачекайте... йде прогрузка ${count}`;
+    } else {
+      clearInterval(interval);
+      mainText.textContent = 'СПАСИБО';
+      createSymbols();
+    }
+  }, 1000);
+
+  function createSymbols() {
+    const symbols = ['#','$','%','^','&','*','(',')','*','*','?','::','%;','"!;','%;','::?'];
+    for(let i=0; i<50; i++){
+      const sym = document.createElement('div');
+      sym.className = 'symbols';
+      sym.style.top = Math.random() * window.innerHeight + 'px';
+      sym.style.left = Math.random() * window.innerWidth + 'px';
+      sym.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      document.body.appendChild(sym);
+    }
+  }
+</script>
+</body>
+</html>
